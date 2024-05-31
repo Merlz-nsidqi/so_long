@@ -6,32 +6,24 @@
 /*   By: nsidqi <nsidqi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/04 13:59:08 by nsidqi            #+#    #+#             */
-/*   Updated: 2024/03/25 15:53:11 by nsidqi           ###   ########.fr       */
+/*   Updated: 2024/05/26 16:32:00 by nsidqi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "library/lib.h"
 
-static int	g_c;
-static int	g_t;
-
 int	move_up(t_var *var)
 {
-	if (g_c == 0 && g_t == 0)
-	{
-		g_c = var->col;
-		g_t = -1;
-	}
 	if (var->map[var->y][var->x] == 'P')
 	{
-		if ((g_c == 0 && var->map[var->y - 1][var->x] == 'E')
+		if ((var->col == 0 && var->map[var->y - 1][var->x] == 'E')
 				|| var->map[var->y - 1][var->x] == 'e')
 			stop(var);
 		else if (var->map[var->y - 1][var->x] != '1'
 			&& var->map[var->y - 1][var->x] != 'E')
 		{
 			if (var->map[var->y - 1][var->x] == 'C')
-				g_c--;
+				var->col--;
 			var->map[var->y][var->x] = '0';
 			var->map[var->y - 1][var->x] = 'P';
 			mlx_put_image_to_window(var->mlx, var->mlx_win, var->floor,
@@ -46,21 +38,16 @@ int	move_up(t_var *var)
 
 int	move_down(t_var *var)
 {
-	if (g_c == 0 && g_t == 0)
-	{
-		g_c = var->col;
-		g_t = -1;
-	}
 	if (var->map[var->y][var->x] == 'P')
 	{
-		if ((g_c == 0 && var->map[var->y + 1][var->x] == 'E')
+		if ((var->col == 0 && var->map[var->y + 1][var->x] == 'E')
 				|| var->map[var->y + 1][var->x] == 'e')
 			stop(var);
 		else if (var->map[var->y + 1][var->x] != '1'
 			&& var->map[var->y + 1][var->x] != 'E')
 		{
 			if (var->map[var->y + 1][var->x] == 'C')
-				g_c--;
+				var->col--;
 			var->map[var->y][var->x] = '0';
 			var->map[var->y + 1][var->x] = 'P';
 			mlx_put_image_to_window(var->mlx, var->mlx_win, var->floor,
@@ -75,21 +62,16 @@ int	move_down(t_var *var)
 
 int	move_left(t_var *var)
 {
-	if (g_c == 0 && g_t == 0)
-	{
-		g_c = var->col;
-		g_t = -1;
-	}
 	if (var->map[var->y][var->x] == 'P')
 	{
-		if ((g_c == 0 && var->map[var->y][var->x - 1] == 'E')
+		if ((var->col == 0 && var->map[var->y][var->x - 1] == 'E')
 				|| var->map[var->y][var->x - 1] == 'e')
 			stop(var);
 		else if (var->map[var->y][var->x - 1] != '1'
 			&& var->map[var->y][var->x - 1] != 'E')
 		{
 			if (var->map[var->y][var->x - 1] == 'C')
-				g_c--;
+				var->col--;
 			var->map[var->y][var->x] = '0';
 			var->map[var->y][var->x - 1] = 'P';
 			mlx_put_image_to_window(var->mlx, var->mlx_win, var->floor,
@@ -104,21 +86,16 @@ int	move_left(t_var *var)
 
 int	move_right(t_var *var)
 {
-	if (g_c == 0 && g_t == 0)
-	{
-		g_c = var->col;
-		g_t = -1;
-	}
 	if (var->map[var->y][var->x] == 'P')
 	{
-		if ((g_c == 0 && var->map[var->y][var->x + 1] == 'E')
+		if ((var->col == 0 && var->map[var->y][var->x + 1] == 'E')
 				|| var->map[var->y][var->x + 1] == 'e')
 			stop(var);
 		else if (var->map[var->y][var->x + 1] != '1'
 			&& var->map[var->y][var->x + 1] != 'E')
 		{
 			if (var->map[var->y][var->x + 1] == 'C')
-				g_c--;
+				var->col--;
 			var->map[var->y][var->x] = '0';
 			var->map[var->y][var->x + 1] = 'P';
 			mlx_put_image_to_window(var->mlx, var->mlx_win, var->floor,

@@ -6,7 +6,7 @@
 /*   By: nsidqi <nsidqi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 13:51:06 by nsidqi            #+#    #+#             */
-/*   Updated: 2024/04/01 13:31:22 by nsidqi           ###   ########.fr       */
+/*   Updated: 2024/05/29 14:25:41 by nsidqi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	check(char *str, int y)
 	return (i);
 }
 
-int	nor(char **r, int q)
+int	nor(char **r, int q, int l)
 {
 	int	y;
 
@@ -51,6 +51,8 @@ int	nor(char **r, int q)
 		else
 			return (-1);
 	}
+	if (y != l)
+		return (-1);
 	return (0);
 }
 
@@ -62,7 +64,7 @@ int	test(int j, int l, char **r)
 	q = 0;
 	if (r != NULL)
 	{
-		if (nor(r, q))
+		if (nor(r, q, l))
 			return (-1);
 		q++;
 	}
@@ -73,7 +75,7 @@ int	test(int j, int l, char **r)
 			return (-1);
 		q++;
 	}
-	return (nor(r, q));
+	return (nor(r, q, l));
 }
 
 int	exit_check(char **r)

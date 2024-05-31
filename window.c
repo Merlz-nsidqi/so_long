@@ -6,7 +6,7 @@
 /*   By: nsidqi <nsidqi@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/25 16:43:52 by nsidqi            #+#    #+#             */
-/*   Updated: 2024/04/01 13:22:06 by nsidqi           ###   ########.fr       */
+/*   Updated: 2024/05/29 14:23:28 by nsidqi           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ void	lenghts(char **av, t_var *var)
 		str = get_next_line(fd);
 		var->maplen++;
 	}
+	close(fd);
 	if (var->maplen > 273 || var->lenstr > 273)
 		exit(1);
 }
@@ -78,6 +79,7 @@ void	needs(char **av, t_var *var)
 	l = 0;
 	fd = open(av[1], O_RDWR);
 	res = store(*var, fd, l);
+	close(fd);
 	var->map = ft_strdup(res, *var);
 	var->x = player_x(res);
 	var->y = player_y(res);
@@ -98,26 +100,26 @@ int	main(int ac, char **av)
 	t_var	var;
 	int		i;
 
-	if (ac == 2)
+	if (ac != 2)
+		return (write(1, "Error\nonly two args!", 20), exit(1), 0);
+	lenghts(av, &var);
+	i = 0;
+	while (av[1][i])
+		i++;
+	if (av[1][i - 1] != 'r' || av[1][i - 2] != 'e'
+		|| av[1][i - 3] != 'b' || av[1][i - 4] != '.')
+		return (write(1, "Error\nfile name!", 16), exit(1), 0);
+	else
 	{
-		lenghts(av, &var);
-		i = 0;
-		while (av[1][i])
-			i++;
-		i--;
-		if (av[1][i] == 'r' && av[1][i - 1] == 'e'
-			&& av[1][i - 2] == 'b' && av[1][i - 3] == '.')
-		{
-			needs(av, &var);
-			var.mlx = mlx_init();
-			var.mlx_win = mlx_new_window(var.mlx, (var.lenstr * IMG_X),
-					(var.maplen * IMG_Y), "so_long");
-			store_image(&var);
-			lines(&var);
-			mlx_hook(var.mlx_win, 2, 0, key_press, &var);
-			mlx_hook(var.mlx_win, 17, 0, stop, &var);
-			mlx_loop(var.mlx);
-		}
+		needs(av, &var);
+		var.mlx = mlx_init();
+		var.mlx_win = mlx_new_window(var.mlx, (var.lenstr * IMG_X),
+				(var.maplen * IMG_Y), "so_long");
+		store_image(&var);
+		lines(&var);
+		mlx_hook(var.mlx_win, 2, 0, key_press, &var);
+		mlx_hook(var.mlx_win, 17, 0, stop, &var);
+		mlx_loop(var.mlx);
 	}
 	return (0);
 }
